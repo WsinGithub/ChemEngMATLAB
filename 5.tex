@@ -1,0 +1,150 @@
+\chapter{数值微分与积分}
+\begin{introduction}
+\item 数值微分的三种思路
+\item diff与fnder函数
+\item 插值型积分公式
+\item quad与quadl函数
+\end{introduction}
+\section{数值微分}
+\subsection{建立数值微分公式}
+\begin{definition}{三种思路}{}
+[差分]
+
+从微分定义出发，通过近似处理，得到数值微分的近似公式。
+
+[插值]
+
+从插值近似公式出发，对插值公式的近似求导可得到数值微分的近似公式。
+
+[拟合]
+
+先用最小二乘拟合方法根据已知数据或得近似函数(如样条函数)，再对此近似函数求微分可得到数值微分的近似公式。
+\end{definition}
+\subsection{向前差分及diff函数}
+在MATLAB中，可用diff求向量相邻元素的差值:
+\begin{lstlisting}[frame=single,numbers=left]
+% 向前差分函数diff
+% 调用形式
+Y=diff(X,n,dim)
+% X：输入矩阵
+% n：差分阶数，默认1
+% dim：行1列2，默认按行差分
+% Y=diff(X,2)等价于Y=diff(diff(X))
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,numbers=left]
+% 常用形式
+Y=diff(X)
+% 若X为m阶向量，则上式等价于
+Y=[X(2)-X(1) X(3)-X(2)..X(m)-X(m-1)]
+\end{lstlisting}
+
+\newpage
+
+则可用\textcolor{third}{\textbf{一阶向前差分}}近似计算$\frac{\mathrm{d}x}{\mathrm{d}y}$。
+\begin{lstlisting}[frame=single,numbers=left]
+diff(y)./diff(x)
+\end{lstlisting}
+
+
+
+\subsection{三次插值与fnder函数}\label{cubic}
+\begin{note}
+关于spline/phchip的函数介绍见\ref{spline}，不再赘述。
+\end{note}
+
+解决该类问题需要用到fnder函数，介绍如下:
+
+\begin{lstlisting}[frame=single,numbers=left]
+% Differentiate function
+% 调用格式
+fprime=fnder(f,dorder) %dorder求导阶数，默认为1
+\end{lstlisting}
+\begin{lstlisting}[frame=single,numbers=left]
+% 常用形式
+pp=spline(x,y); %pp为三次样条插值函数
+fprime=fnder(pp); %fprime为pp的一阶导函数
+value=fnval(fprime,x) %计算在x处的导数值
+\end{lstlisting}
+
+\subsection{拟合与微分}\label{fitd}
+\begin{note}
+此节\ref{fitd}隋志军老师于考试要点W12中未作要求，部分内容可参考拟合章节\ref{fit}。
+\end{note}
+
+\begin{lstlisting}[frame=single,numbers=left]
+% 多项式拟合求微分
+p=ployfit(x,y,n); %多项式向量
+dp=polyder(p); %多项式导函数
+dpv=ployval(dp,x); %计算函数值，也可用fnval(dp,x)
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,numbers=left]
+% 样条拟合求微分
+% 可用cspas/spaps/spap2
+% 举cspas为例:
+pp=csaps(x,y); %pp为样条拟合函数
+fprime=fnder(pp); %fprime为pp的一阶导函数
+value=fnval(fprime,x) %计算在x处的导数值
+\end{lstlisting}
+\section{数值积分}
+\subsection{基本思路与方法}
+基本思路来自于\textcolor{third}{\textbf{插值法}}， 通过构造一个插值多项式$Pn(x)$作为$f(x)$的近似表达式，用$Pn(x)$的积分值作为$f(x)$的近似积分值。
+\begin{definition}{Newton-Cotes求积公式}{}
+a)等距节点，分为n份;
+
+b)使用Lagrange插值多项式近似。
+\end{definition}
+特别地，改变其中等分数n=1,2，可得：
+\begin{enumerate}
+  \item \textbf{梯形求积公式}；
+  \item \textbf{Simpson求积公式}。
+\end{enumerate}
+
+\begin{definition}{复化求积}{}
+a)将积分区间$[a,b]$分为n个相等子区间;
+
+b)对每个子区间使用梯形求积或Simpson求积公式。
+\end{definition}
+
+\begin{definition}{自适应求积}{}
+a)考虑区间上及其二等分以后的两个Simpson积分和，分别记为S1、S2;
+
+b)~S1、S2满足精度要求则不再二等分，取该区间积分值为S2。
+
+[注]：可以不等步长。
+\end{definition}
+
+\begin{note}
+牛顿-科特斯和高斯-勒让德求积公式，从略。
+\end{note}
+
+\subsection{quad和quadl函数}
+自适应Simpson法数值积分：\textcolor{third}{\textbf{quad}}。
+
+\begin{lstlisting}[frame=single,numbers=left]
+% 调用形式
+q=quad(fun,a,b,tol,trace,p1,p2,…)
+% fun 被积函数
+% a,b 积分上下限
+% tol 求解精度
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,numbers=left]
+% 常用形式
+q=quad(fun,a,b)
+\end{lstlisting}
+自适应Lobatto数值积分：\textcolor{third}{\textbf{quadl}}，结果更精确。
+\begin{lstlisting}[frame=single,numbers=left]
+% quadl函数与quad函数的使用完全一致
+q=quadl(fun,a,b)
+q=quadl(fun,a,b,tol,trace,p1,p2,…)
+\end{lstlisting}
+
+\begin{note}
+被积函数支持向量化运算,函数表达式 中的必须使用点运算符号!
+\end{note}
+
+\begin{note}
+fun用法请参考\ref{func}。
+\end{note}

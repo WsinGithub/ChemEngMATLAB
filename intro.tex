@@ -1,0 +1,37 @@
+\chapter*{写在前面\footnote{点击目录后的页码可快速跳转到指定内容，也可以在书签页快速浏览。}}
+期末临近，本文将作为华理化工学院专业必修课程“计算机化工应用”的复习指南。
+
+本文制作过程中主要参考了隋志军老师的教材《化工数值计算与MATLAB》、作业、课件，并参考了付金硕学长的相关资料。在文档制作过程中还得到了\LaTeX{}技术交流 1 群与\LaTeX{}科技排版工作室中网（da）友（lao）们的帮助，在此感谢他们！
+\begin{lstlisting}[frame=single,numbers=left]
+% 此环境下主要介绍函数的写法
+其中，`\mlplaceholder{空缺}`通常表示占位符。
+while `\mlplaceholder{condition}`
+    if `\mlplaceholder{something-happens}`
+        % do something useful
+    end
+end
+\end{lstlisting}
+
+\begin{lstlisting}
+% 此环境下主要给出例题的解答，各位可以直接复制到MATLAB中运行
+function exam5_3_1
+t=3:3:30;
+G1=[10.2 13.9 12.16 13.49 13.74 12.01 11.55 11.02 12 12.12];
+G2=[6.91 8.94 8.69 10.09 10.63 9.58 9.53 9.29 10.13 10.24];
+A=1.83;
+X=(G1-G2)./G2;
+tt=linspace(3,30);
+% 插值
+pp=spline(t,X);
+ppv=-fnval(pp,tt)/A;
+% 微分
+dp=fnder(pp);dpv=fnval(dp,tt);
+plot(t,X,'ro',tt,ppv,tt,dpv,'.-')
+axisX=refline(0,0)
+axisX.Color='c'
+legend('原始数据','拟合曲线','导数曲线','导数参考直线')
+\end{lstlisting}
+
+时间仓促，错误\footnote{各位如果发现写错的地方，请联系我QQ568365675!}与疏漏\footnote{后续更新于\href{https://github.com/WsinGithub/ChemEngMATLAB}{https://github.com/WsinGithub/ChemEngMATLAB}}在所难免，请各位辩证地使用！
+
+最后，预祝各位期末顺利，门门4.0！

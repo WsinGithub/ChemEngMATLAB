@@ -1,0 +1,59 @@
+\documentclass[cn,11pt]{elegantbook}
+%-------------------------------------------
+%-------------------------------------------
+% 只检查错误，不编译，提高速度
+%\usepackage{syntonly}
+%\syntaxonly %只编译
+%-------------------------------------------
+%-------------------------------------------
+% 只显示部分内容
+%\includeonly{6}
+%-------------------------------------------
+%-------------------------------------------
+% MATLAB
+\usepackage{matlab-prettifier}%matlab排版
+\usepackage[T1]{fontenc}%matlab字体
+
+%\setCJKmainfont{微软雅黑}  %中文字体设置
+%\setCJKsansfont{楷体} %设置中文字体
+%\setCJKmonofont{} %设置中文字体
+
+\lstset{style=Matlab-editor,
+  escapechar=`,
+  frame=shadowbox,
+  numbers=none
+} % 定义默认代码块格式
+%-------------------------------------------
+%-------------------------------------------、
+% 封面页设置
+\title{《化工数值计算与MATLAB》复习指南}
+\subtitle{——计算机化工应用\ ||\ \href{https://github.com/WsinGithub/ChemEngMATLAB}{ChemEngMATLAB}}
+\author{王世强}
+\institute{华东理工大学化工学院}
+\date{\today}
+\version{0.4\ ||\ 本文模板来自\href{https://elegantlatex.org/}{Elegant\LaTeX{} 项目组}}
+\extrainfo{}
+\logo{logo.png}
+\cover{cover.png}
+\extrainfo{注：封面图选自《日常》第零集}
+%-------------------------------------------
+%-------------------------------------------
+\begin{document}
+% 标题页开关
+\maketitle \tableofcontents 
+%\thispagestyle{empty}
+\mainmatter
+\hypersetup{pageanchor=true}
+%-------------------------------------------
+\include{intro}
+\include{0}
+\include{1}
+\include{2}
+\include{3}
+\include{4}
+\include{5}
+\include{6}
+%\include{end} 
+%\include{MWE} %模板
+%-------------------------------------------
+\end{document}

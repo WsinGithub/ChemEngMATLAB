@@ -1,0 +1,70 @@
+\chapter*{绪论部分}
+\addcontentsline{toc}{chapter}{绪论部分}
+\markboth{绪论部分}{}
+\begin{introduction}
+\item 误差
+\item 浮点数及其运算
+\item MATLAB 的常用命令
+\end{introduction}
+\section{误差}
+\subsection{误差来源}
+\begin{itemize}
+  \item \textbf{模型误差}，问题简化过程产生
+  \item \textbf{截断误差}，有限次运算限制产生
+  \item \textbf{舍入误差}，机器字长限制产生
+\end{itemize}
+有关误差定义不再赘述，举Work1中一例：
+\begin{problem}
+已知某化工管道的真实长度为 1000m，某次测量结果为 1001m，其测量的绝
+对误差，相对误差为多少？
+\end{problem}
+
+\begin{solution}
+绝对误差为 1m，相对误差为 0.1\%。
+\end{solution}
+
+\section{浮点数与浮点数运算}
+\subsection{浮点数}
+由于计算机资源的有限，在计算机上只能表示有限的实数，这些数被称为浮点数。
+
+浮点数有如下性质：\textbf{有限个、有界、非连续。}
+\subsection{IEEE标准双精度浮点运算体系}
+
+\begin{definition}{特殊浮点数}{}
+最大实数（上溢：超过用inf或Inf表示）：
+\[real_{max}=1.79e+308
+\]
+最小正实数（下溢：若为小于其的正数，则记为0）：
+\[real_{min}=2.225e-308
+\]
+从1到下一个较大浮点数的距离（机器精度）：
+\[eps=2^{-52}=2.220e-16
+\]
+\end{definition}
+\subsection{浮点数运算}
+浮点数运算，加法和乘法运算交换律仍然适用，但是
+其结合律和分配律已不再适用。
+\begin{definition}{NaN}{}
+ Not a Number，非数。
+\end{definition}
+
+计算下列情况时会出现，
+
+\begin{itemize}
+  \item 0 / 0
+  \item $\infty / \infty$
+  \item (+Inf) + (-Inf)
+  \item 0 * Inf
+\end{itemize}
+\section{MATLAB的通用命令}
+\begin{definition}{常用命令}{}
+ clc：清除命令窗口内容
+ 
+ clear：清除内存变量
+ 
+ save：保存内存变量到指定文件
+\end{definition}
+
+\begin{lstlisting}[frame=single,numbers=left]
+clc,clear %通常用作初始化
+\end{lstlisting}

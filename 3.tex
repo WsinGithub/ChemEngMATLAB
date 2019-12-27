@@ -1,0 +1,121 @@
+\chapter{非线性方程(组)求解}
+\begin{introduction}
+\item 求解函数fzero、fslove、roots
+\item 数值求解方法
+\end{introduction}
+\section{求解函数}\label{func}
+\subsection{fzero函数}
+fzero 函数是 MATLAB 里用于求解\textcolor{third}{\textbf{单个}}非线性方程的函数。它的基本使用格式如下：
+\begin{lstlisting}[frame=single,numbers=left]
+% 完整形式
+[x,fval,exitflag,output]=fzero(fun,x0,options, p1, p2, ...)
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,numbers=left]
+% 常用形式
+x=fzero(`\mlplaceholder{fun}`,`\mlplaceholder{x0}`)
+% 其中，`\mlplaceholder{fun}`为匿名函数或函数句柄
+% `\mlplaceholder{x0}`为迭代初值,
+% 也可为区间[x1,x2],函数值在端点处异号，在端点内求根
+% x为x0附近的解,如有多根，则与x0选取有关
+\end{lstlisting}
+
+对于`\mlplaceholder{fun}`的使用举例如下:
+
+\begin{lstlisting}
+% 匿名函数
+fun1=@(x) x-1;
+fzero(fun1,0) %结果为1
+\end{lstlisting}
+
+\begin{lstlisting}
+% 函数句柄
+% 编写.m文件（函数文件也可）
+fzero(@fun2,0) %结果为1
+function y=fun2(x)
+y=x-1;
+end %脚本中的所有函数都必须以 'end' 结束，函数(文件)中则不需要
+\end{lstlisting}
+
+二者实现的结果类似。
+
+\newpage
+\subsection{fsolve函数}
+fsolve 函数是 MATLAB 里用于求解非线性\textcolor{third}{\textbf{方程组}}的函数。它的基本使用格式如下：
+\begin{lstlisting}[frame=single,numbers=left]
+% 完整形式
+[x,fval,exit]=fsolve(fun,x0,option)
+\end{lstlisting}
+
+对于求解方程组\footnote{摘自上机材料3}：
+
+\[ y =
+\begin{cases}
+x^2+y^2-1=0\\
+0.75x^3-y+0.9=0
+\end{cases} \]
+
+可新建函数文件求解：
+
+\begin{lstlisting}
+% 新建文件ExperFsolve.m
+function ExperFsolve
+x0=[0 0];
+[x,fval,exit]=fsolve(@fun,x0)
+function y=fun(x)
+y=zeros(2,1);
+y(1)=x(1)^2+x(2)^2-1;
+y(2)=0.75*x(1)^3-x(2)+0.9;
+\end{lstlisting}
+
+也可使用匿名函数求解,二者运行结果相同：
+\begin{lstlisting}
+x0=[0 0]; 
+f=@(x) [x(1)^2+x(2)^2-1;0.75*x(1)^3-x(2)+0.9];
+[x,fval,exit]=fsolve(f,x0)
+\end{lstlisting}
+
+\begin{note}
+fzero函数和fsolve函数的运行结果为初值附近的解，而非全部解。
+\end{note}
+\subsection{roots函数}\label{ployp}
+fsolve 函数是 MATLAB 里用于求解\textcolor{third}{\textbf{多项式}}的函数。它的基本使用格式如下：
+\begin{lstlisting}[frame=single,numbers=left]
+r=roots(`\mlplaceholder{p}`)
+% 其中`\mlplaceholder{p}`为n次多项式行向量,从高(n次)到低(0次)排列
+\end{lstlisting}
+譬如，求解方程$x^2-1=0$,
+\begin{lstlisting}
+roots([1 0 -1]) %结果为[-1;1]
+\end{lstlisting}
+\begin{note}
+roots函数可以获得多项式的所有根。
+\end{note}
+
+\newpage
+\section{常用数值求解方法}
+非线性方程求数值解方法有：
+
+\textbf{逐步扫描法，二分法，牛顿法，割线法，逆二次插值...}
+
+\begin{definition}{二分法}{}
+\textbf{[基本思想]}\\
+区间逐次二等分至精度要求。
+
+\textbf{[求解精度]}\\
+可靠，只要次数足够多一定能到指定精度。
+
+\textbf{[效率]}\\
+收敛速度较慢。
+\end{definition}
+
+\begin{proposition}{收敛性对比}{}
+\textbf{[牛顿法]}\\
+二次收敛；收敛速度不稳定，某些条件下收敛慢或根本不收敛；导数计算不便。
+
+\textbf{[截弦法]}\\
+超线性收敛；类似牛顿法；无需计算导数。
+
+\textbf{[逆二次插值]}\\
+三点构造抛物线交坐标轴迭代；整个过程收敛速度不稳定；接近终点时迭代快。
+\end{proposition}
