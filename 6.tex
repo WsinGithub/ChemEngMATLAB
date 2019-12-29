@@ -14,9 +14,9 @@
 本节主要关注利用\textbf{步进法}解决\textbf{初值问题}。
 \subsection{初值问题的数值解方法}
 \begin{itemize}
-	\item 欧拉法：单步，矩形公式；
-	\item 龙格－库塔法：单步，线性组合；
-	\item 阿达姆斯法：多步。
+  \item 欧拉法：单步，矩形公式；
+  \item 龙格－库塔法：单步，线性组合；
+  \item 阿达姆斯法：多步。
 \end{itemize}
 \section{MATLAB解常微分方程}
 \subsection{微分方程的表示}
@@ -80,22 +80,13 @@ options=odeset('outputfcn','odephas2')
 
 \newpage
 \begin{problem}
-某串联反应各物质的浓度与反应时间 $t$ 的关系如下\footnote{改自隋志军老师“课程练习题”}：
-\[
-	\begin{cases}
-		\frac{\dd{C_{A}}}{\dd{t}} = - k_{1} C_{A} \\
-		\frac{\dd{C_{B}}}{\dd{t}} = k_{1} C_{A} - k_{2} C_{B} \\
-		\frac{\dd{C_{C}}}{\dd{t}} = k_{2} C_{B} - k_{2} C_{C} \\
-		\frac{\dd{C_{D}}}{\dd{t}} = k_{3} C_{C} - k_{4} C_{D} \\
-		\frac{\dd{C_{E}}}{\dd{t}} = k_{4} C_{D}
-	\end{cases}
-\]
+某串联反应各物质的浓度与反应时间 t的关系如下\footnote{改自隋志军老师“课程练习题”}：
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.4\textwidth]{ode.png}
 \end{figure}
-\\已知 $k_{1} = 0.04$，$k_{2}=0.05$，$k_{3}=0.10$，$k_{4}=0.08$，反应开始时只有 A 存在，其浓度为 1。
-试编写一个 MATLAB 函数,求前 \SI{60}{s} 中每隔 \SI{5}{s} 时各物质的浓度，并作图。
+\\已知k1=0.04，k2=0.05，k3=0.10，k4=0.08，反应开始时只有 A 存在，其浓度为 1。
+试编写一个 MATLAB 函数,求前 60s 中每隔 5s 时各物质的浓度，并作图。
 \end{problem}
 
 \begin{solution}
